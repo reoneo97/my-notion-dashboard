@@ -18,6 +18,7 @@ class NotionDatabase(object):
         headers = {}
         headers["Authorization"] = self.token
         headers["Content-type"] = "application/json"
+        headers["Notion-Version"] = "2021-05-13"
         return headers
 
     def query_database(self):
@@ -26,13 +27,26 @@ class NotionDatabase(object):
         data = requests.post(endpoint,headers=headers)
         return data.json()
 
-    def retrieve_database(self):
+    def retrieve_properties(self):
         """Obtain database properties to set up the app
 
         Returns:
             json: JSON of Database properties
         """
-        endpoint = f"{self.url}/databases/{self.db}/"
+        endpoint = f"{self.url}/databases/{self.db}"
         headers = self.notion_headers()
-        data = requests.get(endpoint)
+        data = requests.get(endpoint,headers=headers)
         return data.json()
+
+    def set_property(self,page_id,property_,value):
+        endpoint = f"{self.url}/pages/{page_id}"
+        headers = self.notion_headers()
+        query = {
+            "properties":{
+                property_: { "number" : value}
+            }
+
+        }   
+        response = requests.patch(endpoint,json=query,headers=headers)
+        return response
+        

@@ -36,6 +36,6 @@ def parse_config(cfg_path: Path = None) -> Dict:
 def load_config(cfg_path: Path = None) -> NotionConfig:
     parsed_config = parse_config(CFG_PATH)
     config = NotionConfig(**parsed_config["notion_config"])
-    return config
+    return config 
 
 config = load_config(CFG_PATH)
