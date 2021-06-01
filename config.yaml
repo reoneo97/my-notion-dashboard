@@ -1,0 +1,4 @@
+notion_config:
+  integration_token: "<YOUR TOKEN>"
+  notion_url: "https://api.notion.com/v1/databases"
+  db_id: "<YOUR ID>"
