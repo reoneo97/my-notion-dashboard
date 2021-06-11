@@ -2,3 +2,6 @@ __pycache__
 my_config.yaml
 *.json
 *.csv
+*.png
+images/
+app_jinbe.py

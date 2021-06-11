@@ -29,7 +29,7 @@ def fetch_config_from_yaml(cfg_path: Path = None) -> Dict:
 def parse_config(cfg_path: Path = None) -> Dict:
     if cfg_path:
         with open(cfg_path, "r") as f:
-            parsed = yaml.load(f)
+            parsed = yaml.load(f,Loader=yaml.Loader)
             return parsed
 
 

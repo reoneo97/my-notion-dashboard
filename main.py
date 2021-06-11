@@ -1,7 +1,6 @@
 from dashboard.config import config
 from dashboard.notion import NotionDatabase
 import json
-import curlify
 import pandas as pd
 import dashboard.utils as utils
 

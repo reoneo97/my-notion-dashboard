@@ -50,3 +50,16 @@ class NotionDatabase(object):
         response = requests.patch(endpoint,json=query,headers=headers)
         return response
         
+    def query_property(self,prop_name,prop_type):
+        query = {
+            "filter":{
+                "property": prop_name,
+                prop_type:{
+                    "is_not_empty":True
+                }
+            }
+        }
+        endpoint = f"{self.url}/databases/{self.db}/query"
+        headers = self.notion_headers()
+        response = requests.post(endpoint,headers=headers,json=query)
+        return response.json()
