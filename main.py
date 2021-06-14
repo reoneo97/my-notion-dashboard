@@ -2,18 +2,15 @@ from dashboard.config import config
 from dashboard.notion import NotionDatabase
 import json
 import pandas as pd
-import dashboard.utils as utils
+import dashboard.utils.parse as parse
+import IPython
+
 
 db = NotionDatabase(config)
 
-data=db.query_database()
-df = pd.DataFrame.from_dict(data["results"])
-df.to_csv("data.csv")
-# with open("data.json","w+") as f:
-#     json.dump(data,f)
-
-properties = db.retrieve_properties()
-parsed_properties = utils.parse_database_properties(properties)
+print(db.get_page_ids())
+properties = db.get_properties()
+parsed_properties = parse.parse_database_properties(properties)
 print(parsed_properties)
 # with open("properties.json","w+") as f:
 #     json.dump(properties,f)

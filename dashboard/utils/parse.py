@@ -3,6 +3,8 @@ import json
 from typing import List, Dict, Tuple
 from pydantic import BaseModel
 from datetime import datetime
+
+
 def parse_database_pages(data: Dict):
     results = data["results"]
 
@@ -36,6 +38,17 @@ def parse_database_for_property(results: List,prop_name: str,
         property_values.append(page["properties"][prop_name][prop_type]["name"])
     timestamps = [datetime.strptime(ts,"%Y-%m-%dT%H:%M:%S.%f%z") for ts in timestamps]
     return timestamps,property_values
+
+def parse_page_text(data) -> str:
+    results = data["results"]
+    text = ""
+    for i,v in enumerate(results):
+        text_type = v["type"]
+        try:
+            text += v[text_type]["text"][0]["plain_text"] +"\n\n"
+        except IndexError:
+            text += ""
+    return text
 
 def one_hot_encode():
     # Select Properties

@@ -10,6 +10,7 @@ class NotionConfig(BaseModel):
     integration_token: str
     notion_url: str
     db_id: str
+    Notion_Version: str
     _source: Optional[str]
 
 

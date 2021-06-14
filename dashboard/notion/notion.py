@@ -10,6 +10,7 @@ class NotionDatabase(object):
         self.url = config.notion_url
         self.db = config.db_id
         self.token = config.integration_token
+        self.Notion_Version = config.Notion_Version
 
     def __str__(self):
         return str({a:v for a,v in self.__dict__.items()})
@@ -18,16 +19,16 @@ class NotionDatabase(object):
         headers = {}
         headers["Authorization"] = self.token
         headers["Content-type"] = "application/json"
-        headers["Notion-Version"] = "2021-05-13"
+        headers["Notion-Version"] = self.Notion_Version
         return headers
 
-    def query_database(self):
+    def get_database(self):
         endpoint = f"{self.url}/databases/{self.db}/query"
         headers = self.notion_headers()
         data = requests.post(endpoint,headers=headers)
         return data.json()
 
-    def retrieve_properties(self):
+    def get_properties(self):
         """Obtain database properties to set up the app
 
         Returns:
@@ -63,3 +64,15 @@ class NotionDatabase(object):
         headers = self.notion_headers()
         response = requests.post(endpoint,headers=headers,json=query)
         return response.json()
+    #Database Queries only provide properties,  
+    def get_page_content(self,page_id):
+        endpoint = f"{self.url}/blocks/{page_id}/children"
+        headers = self.notion_headers()
+        data = requests.get(endpoint,headers=headers)
+        return data.json()
+    
+    def get_page_ids(self):
+        data = self.get_database()
+        id_map = {i["properties"]["Name"]["title"][0]["plain_text"] \
+            :i["id"] for i in data["results"]}
+        return id_map

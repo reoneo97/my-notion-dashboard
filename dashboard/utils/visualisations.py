@@ -12,7 +12,7 @@ def time_scatter_select_plot(prop_name:str, prop_opts: List[str],
     prop_map = {name:i for i,name in enumerate(prop_opts)}
     #values = [prop_map[name] for name in values]
     df = pd.DataFrame({"timestamp":x,prop_name:values})
-    fig = px.scatter(df,x="timestamp",y=prop_name,
+    fig = px.scatter(df,x="timestamp",y=prop_name,color=prop_name,
         category_orders={prop_name:prop_opts})
     return fig
 
